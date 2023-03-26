@@ -1,0 +1,129 @@
+{
+  "mod_elements": [
+    {
+      "name": "Curse",
+      "type": "command",
+      "sortid": 1,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "curse",
+      "metadata": {
+        "files": [
+          "src/main/java/net/salju/curse/command/CurseCommand.java"
+        ]
+      }
+    },
+    {
+      "name": "CurseGui",
+      "type": "gui",
+      "sortid": 3,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "curse_gui",
+      "metadata": {
+        "files": [
+          "src/main/java/net/salju/curse/world/inventory/CurseGuiMenu.java",
+          "src/main/java/net/salju/curse/network/CurseGuiButtonMessage.java",
+          "src/main/java/net/salju/curse/client/gui/CurseGuiScreen.java"
+        ]
+      }
+    },
+    {
+      "name": "CurseEvents",
+      "type": "procedure",
+      "sortid": 6,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "curse_events",
+      "metadata": {
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CurseHelpers",
+      "type": "procedure",
+      "sortid": 8,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "curse_helpers",
+      "metadata": {
+        "files": [
+          "src/main/java/net/salju/curse/procedures/CurseHelpersProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      }
+    }
+  ],
+  "variable_elements": [
+    {
+      "name": "Cursed",
+      "type": "logic",
+      "scope": "player_persistent",
+      "value": "false"
+    }
+  ],
+  "sound_elements": [],
+  "language_map": {
+    "en_us": {
+      "gui.curse.curse_gui.button_yes": "YES",
+      "gui.curse.curse_gui.label_decreased_damage_to_monsters": "-Decreased Damage to Monsters",
+      "gui.curse.curse_gui.label_double_damage_from_all_sources": "-Double Damage from All Sources",
+      "gui.curse.curse_gui.label_double_knockback_from_all_sourc": "-Double Knockback from All Sources",
+      "gui.curse.curse_gui.label_cannot_sleep_while_cursed": "-Cannot Sleep while Cursed",
+      "gui.curse.curse_gui.label_neutral_mobs_are_aggressive": "-Neutral Mobs are Aggressive",
+      "gui.curse.curse_gui.label_extra_loot_from_ores": "+Extra Loot from Ores",
+      "gui.curse.curse_gui.button_no": "NO",
+      "gui.curse.curse_gui.label_triple_experience_from_monsters": "+Triple Experience from Monsters",
+      "gui.curse.curse_gui.label_extra_loot_from_monsters": "+Extra Loot from Monsters",
+      "gui.curse.curse_gui.label_are_you_cursed_my_child": "Are you Cursed, my child?",
+      "gui.curse.curse_gui.label_fire_lasts_forever_until_douse": "-Fire Lasts Forever, until Doused"
+    },
+    "zh_cn": {
+      "gui.curse.curse_gui.button_yes": "接受",
+      "gui.curse.curse_gui.label_decreased_damage_to_monsters": "-你对怪物的伤害将减少",
+      "gui.curse.curse_gui.label_double_damage_from_all_sources": "-你受到的所有伤害将翻倍",
+      "gui.curse.curse_gui.label_double_knockback_from_all_sourc": "-你受到的所有击退将翻倍",
+      "gui.curse.curse_gui.label_cannot_sleep_while_cursed": "-你将无法睡眠",
+      "gui.curse.curse_gui.label_neutral_mobs_are_aggressive": "-中立生物将主动攻击你",
+      "gui.curse.curse_gui.label_extra_loot_from_ores": "+矿石将掉落额外的战利品",
+      "gui.curse.curse_gui.button_no": "拒绝",
+      "gui.curse.curse_gui.label_triple_experience_from_monsters": "+怪物将掉落3倍经验",
+      "gui.curse.curse_gui.label_extra_loot_from_monsters": "+怪物将掉落额外的战利品",
+      "gui.curse.curse_gui.label_are_you_cursed_my_child": "你接受诅咒吗，我的孩子？",
+      "gui.curse.curse_gui.label_fire_lasts_forever_until_douse": "-你身上的火焰在被主动扑灭前永远不会熄灭"
+    }
+  },
+  "foldersRoot": {
+    "name": "~",
+    "children": []
+  },
+  "workspaceSettings": {
+    "modid": "curse",
+    "modName": "Curse",
+    "version": "1.0.9",
+    "author": "Jusey1",
+    "websiteURL": "https://discord.gg/s7QaYGUzZU",
+    "license": "Academic Free License v3.0",
+    "disableForgeVersionCheck": true,
+    "serverSideOnly": false,
+    "requiredMods": [],
+    "dependencies": [],
+    "dependants": [],
+    "mcreatorDependencies": [],
+    "currentGenerator": "forge-1.19.2",
+    "credits": "Jusey1",
+    "modElementsPackage": "net.salju.curse",
+    "lockBaseModFiles": true
+  },
+  "mcreatorVersion": 202300110219
+}

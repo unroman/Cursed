@@ -1,0 +1,200 @@
+{
+  "_fv": 39,
+  "_type": "gui",
+  "definition": {
+    "type": 0,
+    "width": 193,
+    "height": 166,
+    "inventoryOffsetX": 0,
+    "inventoryOffsetY": 0,
+    "renderBgLayer": true,
+    "doesPauseGame": false,
+    "components": [
+      {
+        "type": "button",
+        "data": {
+          "name": "button_yes",
+          "text": "YES",
+          "onClick": {
+            "name": "CurseCommand"
+          },
+          "width": 40,
+          "height": 20,
+          "x": 219,
+          "y": 177
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_are_you_cursed_my_child",
+          "text": {
+            "fixedValue": "Are you Cursed, my child?"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 147,
+          "y": 45
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_double_damage_from_all_sources",
+          "text": {
+            "fixedValue": "-Double Damage from All Sources"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 123,
+          "y": 57
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_double_knockback_from_all_sourc",
+          "text": {
+            "fixedValue": "-Double Knockback from All Sources"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 123,
+          "y": 69
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_decreased_damage_to_monsters",
+          "text": {
+            "fixedValue": "-Decreased Damage to Monsters"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 123,
+          "y": 81
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_fire_lasts_forever_until_douse",
+          "text": {
+            "fixedValue": "-Fire Lasts Forever, until Doused"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 123,
+          "y": 93
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_neutral_mobs_are_aggressive",
+          "text": {
+            "fixedValue": "-Neutral Mobs are Aggressive"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 123,
+          "y": 105
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_cannot_sleep_while_cursed",
+          "text": {
+            "fixedValue": "-Cannot Sleep while Cursed"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 123,
+          "y": 117
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_triple_experience_from_monsters",
+          "text": {
+            "fixedValue": "+Triple Experience from Monsters"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 123,
+          "y": 135
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_extra_loot_from_monsters",
+          "text": {
+            "fixedValue": "+Extra Loot from Monsters"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 123,
+          "y": 147
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_extra_loot_from_ores",
+          "text": {
+            "fixedValue": "+Extra Loot from Ores"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 123,
+          "y": 159
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "name": "button_no",
+          "text": "NO",
+          "onClick": {
+            "name": "NoGui"
+          },
+          "width": 35,
+          "height": 20,
+          "x": 261,
+          "y": 177
+        }
+      }
+    ],
+    "gridSettings": {
+      "sx": 12,
+      "sy": 12,
+      "ox": 16,
+      "oy": 16,
+      "snapOnGrid": true
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "gui.curse.curse_gui.button_yes": "YES",
+  "gui.curse.curse_gui.label_decreased_damage_to_monsters": "-Decreased Damage to Monsters",
+  "gui.curse.curse_gui.label_double_damage_from_all_sources": "-Double Damage from All Sources",
+  "gui.curse.curse_gui.label_double_knockback_from_all_sourc": "-Double Knockback from All Sources",
+  "gui.curse.curse_gui.label_cannot_sleep_while_cursed": "-Cannot Sleep while Cursed",
+  "gui.curse.curse_gui.label_neutral_mobs_are_aggressive": "-Neutral Mobs are Aggressive",
+  "gui.curse.curse_gui.label_extra_loot_from_ores": "+Extra Loot from Ores",
+  "gui.curse.curse_gui.button_no": "NO",
+  "gui.curse.curse_gui.label_triple_experience_from_monsters": "+Triple Experience from Monsters",
+  "gui.curse.curse_gui.label_extra_loot_from_monsters": "+Extra Loot from Monsters",
+  "gui.curse.curse_gui.label_are_you_cursed_my_child": "Are you Cursed, my child?",
+  "gui.curse.curse_gui.label_fire_lasts_forever_until_douse": "-Fire Lasts Forever, until Doused"
+}

@@ -1,0 +1,22 @@
+modLoader="javafml"
+loaderVersion="[43,)"
+license="Academic Free License v3.0"
+
+[[mods]]
+modId="curse"
+version="1.0.9"
+displayName="Curse"
+credits="Jusey1"
+displayURL="https://discord.gg/s7QaYGUzZU"
+authors="Jusey1"
+
+[[dependencies.curse]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.19.2]"
+    ordering="NONE"
+    side="BOTH"
+
+
+
+
