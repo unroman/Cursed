@@ -65,7 +65,7 @@ public class CurseGuiButtonMessage {
 		if (buttonID == 0) {
 			CurseHelpersProcedure.setCursed(player, true);
 			if (!player.level.isClientSide()) {
-				player.displayClientMessage(Component.literal("You have been cursed"), (true));
+				player.displayClientMessage(Component.translatable("gui.curse.curse_message"), (true));
 			}
 			player.closeContainer();
 		}

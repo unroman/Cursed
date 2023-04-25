@@ -1,7 +1,8 @@
-package net.salju.curse.client.gui;
+package net.salju.curse.client.gui;
 
 import net.salju.curse.world.inventory.CurseGuiMenu;
 import net.salju.curse.network.CurseGuiButtonMessage;
+import net.salju.curse.init.CurseModConfig;
 import net.salju.curse.CurseMod;
 
 import net.minecraft.world.level.Level;
@@ -11,7 +12,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.Minecraft;
 
 import java.util.HashMap;
 
@@ -23,6 +23,8 @@ public class CurseGuiScreen extends AbstractContainerScreen<CurseGuiMenu> {
 	private final Level world;
 	private final int x, y, z;
 	private final Player entity;
+	Button button_yes;
+	Button button_no;
 
 	public CurseGuiScreen(CurseGuiMenu container, Inventory inventory, Component text) {
 		super(container, inventory, text);
@@ -70,39 +72,50 @@ public class CurseGuiScreen extends AbstractContainerScreen<CurseGuiMenu> {
 
 	@Override
 	protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
-		this.font.draw(poseStack, "Are you Cursed, my child?", 30, 8, -12829636);
-		this.font.draw(poseStack, "-Double Damage from All Sources", 6, 20, -12829636);
-		this.font.draw(poseStack, "-Double Knockback from All Sources", 6, 32, -12829636);
-		this.font.draw(poseStack, "-Decreased Damage to Monsters", 6, 44, -12829636);
-		this.font.draw(poseStack, "-Fire Lasts Forever, until Doused", 6, 56, -12829636);
-		this.font.draw(poseStack, "-Neutral Mobs are Aggressive", 6, 68, -12829636);
-		this.font.draw(poseStack, "-Cannot Sleep while Cursed", 6, 80, -12829636);
-		this.font.draw(poseStack, "+Triple Experience from Monsters", 6, 98, -12829636);
-		this.font.draw(poseStack, "+Extra Loot from Monsters", 6, 110, -12829636);
-		this.font.draw(poseStack, "+Extra Loot from Ores", 6, 122, -12829636);
+		this.font.draw(poseStack, Component.translatable("gui.curse.curse_gui.label_title"), 30, 8, -12829636);
+		if ((CurseModConfig.EASY.get() < 1.0) && (CurseModConfig.NORMAL.get() < 1.0) && (CurseModConfig.HARD.get() < 1.0))
+			this.font.draw(poseStack, Component.translatable("gui.curse.curse_gui.label_enemy_damage"), 6, 20, -12829636);
+		if (CurseModConfig.DEATH.get() > 1.0)
+			this.font.draw(poseStack, Component.translatable("gui.curse.curse_gui.label_player_damage"), 6, 32, -12829636);
+		if (CurseModConfig.KNOCK.get() > 1.0)
+			this.font.draw(poseStack, Component.translatable("gui.curse.curse_gui.label_player_knockback"), 6, 44, -12829636);
+		if (CurseModConfig.FIRE.get() == true)
+			this.font.draw(poseStack, Component.translatable("gui.curse.curse_gui.label_fire"), 6, 56, -12829636);
+		if (CurseModConfig.ANGRY.get() == true)
+			this.font.draw(poseStack, Component.translatable("gui.curse.curse_gui.label_neutrals"), 6, 68, -12829636);
+		if (CurseModConfig.SLEEP.get() == true)
+			this.font.draw(poseStack, Component.translatable("gui.curse.curse_gui.label_sleep"), 6, 80, -12829636);
+		if (CurseModConfig.EXP.get() > 1.0)
+			this.font.draw(poseStack, Component.translatable("gui.curse.curse_gui.label_exp"), 6, 98, -12829636);
+		if (CurseModConfig.DROPS.get() == true)
+			this.font.draw(poseStack, Component.translatable("gui.curse.curse_gui.label_loot"), 6, 110, -12829636);
+		if (CurseModConfig.ORE.get() == true)
+			this.font.draw(poseStack, Component.translatable("gui.curse.curse_gui.label_ores"), 6, 122, -12829636);
 	}
 
 	@Override
 	public void onClose() {
 		super.onClose();
-		Minecraft.getInstance().keyboardHandler.setSendRepeatsToGui(false);
 	}
 
 	@Override
 	public void init() {
 		super.init();
-		this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
-		this.addRenderableWidget(new Button(this.leftPos + 102, this.topPos + 140, 40, 20, Component.literal("YES"), e -> {
+		button_yes = Button.builder(Component.translatable("gui.curse.curse_gui.button_yes"), e -> {
 			if (true) {
 				CurseMod.PACKET_HANDLER.sendToServer(new CurseGuiButtonMessage(0, x, y, z));
 				CurseGuiButtonMessage.handleButtonAction(entity, 0, x, y, z);
 			}
-		}));
-		this.addRenderableWidget(new Button(this.leftPos + 144, this.topPos + 140, 35, 20, Component.literal("NO"), e -> {
+		}).bounds(this.leftPos + 102, this.topPos + 140, 40, 20).build();
+		guistate.put("button:button_yes", button_yes);
+		this.addRenderableWidget(button_yes);
+		button_no = Button.builder(Component.translatable("gui.curse.curse_gui.button_no"), e -> {
 			if (true) {
 				CurseMod.PACKET_HANDLER.sendToServer(new CurseGuiButtonMessage(1, x, y, z));
 				CurseGuiButtonMessage.handleButtonAction(entity, 1, x, y, z);
 			}
-		}));
+		}).bounds(this.leftPos + 144, this.topPos + 140, 35, 20).build();
+		guistate.put("button:button_no", button_no);
+		this.addRenderableWidget(button_no);
 	}
-}
+}

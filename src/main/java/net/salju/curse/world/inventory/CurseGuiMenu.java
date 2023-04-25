@@ -1,5 +1,4 @@
-
-package net.salju.curse.world.inventory;
+package net.salju.curse.world.inventory;
 
 import net.salju.curse.init.CurseModMenus;
 

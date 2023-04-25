@@ -1,6 +1,7 @@
 package net.salju.curse.procedures;
 
 import net.salju.curse.world.inventory.CurseGuiMenu;
+import net.salju.curse.init.CurseModConfig;
 
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.fml.common.Mod;
@@ -35,10 +36,10 @@ import net.minecraft.world.entity.monster.Vex;
 import net.minecraft.world.entity.monster.Spider;
 import net.minecraft.world.entity.monster.SpellcasterIllager;
 import net.minecraft.world.entity.monster.Skeleton;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.MagmaCube;
 import net.minecraft.world.entity.monster.Husk;
 import net.minecraft.world.entity.monster.Guardian;
+import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.EnderMan;
 import net.minecraft.world.entity.monster.Drowned;
 import net.minecraft.world.entity.monster.Creeper;
@@ -61,7 +62,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.core.BlockPos;
 
 import io.netty.buffer.Unpooled;
@@ -75,16 +76,16 @@ public class CurseEventsProcedure {
 			Entity target = event.getEntity();
 			float damage = event.getAmount();
 			if (target instanceof Player player && CurseHelpersProcedure.isCursed(player)) {
-				event.setAmount((float) (damage * 2));
+				event.setAmount((float) (damage * CurseModConfig.DEATH.get()));
 			} else if (source instanceof Player player && CurseHelpersProcedure.isCursed(player)) {
-				if (target instanceof Monster) {
+				if (target instanceof Enemy) {
 					LevelAccessor world = source.getLevel();
 					if (world.getDifficulty() == Difficulty.NORMAL) {
-						event.setAmount((float) (damage * 0.75));
+						event.setAmount((float) (damage * CurseModConfig.NORMAL.get()));
 					} else if (world.getDifficulty() == Difficulty.HARD) {
-						event.setAmount((float) (damage * 0.5));
+						event.setAmount((float) (damage * CurseModConfig.HARD.get()));
 					} else {
-						event.setAmount((float) (damage * 0.9));
+						event.setAmount((float) (damage * CurseModConfig.EASY.get()));
 					}
 				}
 			}
@@ -97,7 +98,7 @@ public class CurseEventsProcedure {
 			Entity target = event.getEntity();
 			float damage = event.getStrength();
 			if (target instanceof Player player && CurseHelpersProcedure.isCursed(player)) {
-				event.setStrength(damage * 2);
+				event.setStrength((float) (damage * CurseModConfig.KNOCK.get()));
 			}
 		}
 	}
@@ -109,8 +110,8 @@ public class CurseEventsProcedure {
 			Entity target = event.getEntity();
 			int xp = event.getDroppedExperience();
 			if (CurseHelpersProcedure.isCursed(player)) {
-				if (target instanceof Monster) {
-					event.setDroppedExperience(xp * 3);
+				if (target instanceof Enemy) {
+					event.setDroppedExperience((int) (xp * CurseModConfig.EXP.get()));
 				}
 			}
 		}
@@ -126,7 +127,7 @@ public class CurseEventsProcedure {
 			double y = target.getY();
 			double z = target.getZ();
 			int loot = event.getLootingLevel();
-			if (source instanceof Player player && CurseHelpersProcedure.isCursed(player)) {
+			if (source instanceof Player player && CurseHelpersProcedure.isCursed(player) && (CurseModConfig.DROPS.get() == true)) {
 				if (world instanceof Level lvl && (Math.random() >= 0.85)) {
 					if (target instanceof ZombifiedPiglin || target instanceof AbstractPiglin) {
 						for (int index0 = 0; index0 < (int) (Mth.nextInt(RandomSource.create(), (0 + loot), (2 + loot))); index0++) {
@@ -223,26 +224,28 @@ public class CurseEventsProcedure {
 			LevelAccessor world = event.player.level;
 			if (CurseHelpersProcedure.isCursed(player)) {
 				if (!world.isClientSide() && !player.isCreative() && !player.isSpectator()) {
-					if (player.getRemainingFireTicks() == 1) {
+					if (player.getRemainingFireTicks() == 1 && (CurseModConfig.FIRE.get() == true)) {
 						player.setSecondsOnFire(120);
 					}
-					for (Mob angry : player.level.getEntitiesOfClass(Mob.class, player.getBoundingBox().inflate(28.0D))) {
-						if (angry instanceof IronGolem golem && golem.isPlayerCreated())
-							continue;
-						if (angry.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("curse:no_angry"))))
-							continue;
-						if (!(angry instanceof Animal) && (angry.getTarget() == null)) {
-							if (player.hasLineOfSight(angry) || (player.distanceTo(angry) <= 4.0D)) {
-								if ((angry instanceof NeutralMob) || (angry instanceof AbstractPiglin)) {
-									angry.setTarget(player);
+					if (CurseModConfig.ANGRY.get() == true) {
+						for (Mob angry : player.level.getEntitiesOfClass(Mob.class, player.getBoundingBox().inflate(28.0D))) {
+							if (angry instanceof IronGolem golem && golem.isPlayerCreated())
+								continue;
+							if (angry.getType().is(TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation("curse:no_angry"))))
+								continue;
+							if (!(angry instanceof Animal) && (angry.getTarget() == null)) {
+								if (player.hasLineOfSight(angry) || (player.distanceTo(angry) <= 4.0D)) {
+									if ((angry instanceof NeutralMob) || (angry instanceof AbstractPiglin)) {
+										angry.setTarget(player);
+									}
 								}
 							}
 						}
 					}
 				}
-				if (player.isSleeping() && player.getSleepTimer() >= 95) {
+				if (player.isSleeping() && player.getSleepTimer() >= 95 && (CurseModConfig.SLEEP.get() == true)) {
 					player.stopSleeping();
-					player.displayClientMessage(Component.literal("You cannot sleep as a cursed player"), (true));
+					player.displayClientMessage(Component.translatable("gui.curse.sleep_message"), (true));
 				}
 			}
 		}
@@ -253,7 +256,7 @@ public class CurseEventsProcedure {
 		if (event != null && event.getDamageSource().getEntity() != null) {
 			Entity source = event.getDamageSource().getEntity();
 			int loot = event.getLootingLevel();
-			if (source instanceof Player player && CurseHelpersProcedure.isCursed(player)) {
+			if (source instanceof Player player && CurseHelpersProcedure.isCursed(player) && (CurseModConfig.LOOT.get() == true)) {
 				event.setLootingLevel(loot + 1);
 			}
 		}
@@ -268,7 +271,7 @@ public class CurseEventsProcedure {
 		double z = player.getZ();
 		if (!(player.level instanceof ServerLevel ? player.getAdvancements().getOrStartProgress(player.server.getAdvancements().getAdvancement(new ResourceLocation("minecraft:story/root"))).isDone() : false)) {
 			if (!CurseHelpersProcedure.isCursed(player)) {
-				BlockPos pos = new BlockPos(x, y, z);
+				BlockPos pos = BlockPos.containing(x, y, z);
 				NetworkHooks.openScreen((ServerPlayer) player, new MenuProvider() {
 					@Override
 					public Component getDisplayName() {
@@ -288,7 +291,7 @@ public class CurseEventsProcedure {
 	public static void onBlockBreak(BlockEvent.BreakEvent event) {
 		if (event != null && event.getState() != null && event.getPlayer() != null) {
 			Player player = event.getPlayer();
-			if (CurseHelpersProcedure.isCursed(player) && !player.isCreative()) {
+			if (CurseHelpersProcedure.isCursed(player) && !player.isCreative() && (CurseModConfig.ORE.get() == true)) {
 				LevelAccessor world = event.getLevel();
 				double x = event.getPos().getX();
 				double y = event.getPos().getY();
@@ -371,4 +374,4 @@ public class CurseEventsProcedure {
 			}
 		}
 	}
-}
+}

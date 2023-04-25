@@ -23,12 +23,12 @@ public class CurseCommand {
 				if (CurseHelpersProcedure.isCursed(player)) {
 					CurseHelpersProcedure.setCursed(player, false);
 					if (!player.level.isClientSide()) {
-						player.displayClientMessage(Component.literal("The curse have been cured"), (true));
+						player.displayClientMessage(Component.translatable("gui.curse.cure_message"), (true));
 					}
 				} else {
 					CurseHelpersProcedure.setCursed(player, true);
 					if (!player.level.isClientSide()) {
-						player.displayClientMessage(Component.literal("You have been cursed"), (true));
+						player.displayClientMessage(Component.translatable("gui.curse.curse_message"), (true));
 					}
 				}
 			}
