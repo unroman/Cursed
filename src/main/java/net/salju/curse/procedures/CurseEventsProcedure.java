@@ -17,7 +17,6 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.TickEvent;
 
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -52,11 +51,11 @@ import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.MenuProvider;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.Difficulty;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.Mth;
 import net.minecraft.tags.TagKey;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.resources.ResourceLocation;
@@ -79,7 +78,7 @@ public class CurseEventsProcedure {
 				event.setAmount((float) (damage * CurseModConfig.DEATH.get()));
 			} else if (source instanceof Player player && CurseHelpersProcedure.isCursed(player)) {
 				if (target instanceof Enemy) {
-					LevelAccessor world = source.getLevel();
+					LevelAccessor world = source.level();
 					if (world.getDifficulty() == Difficulty.NORMAL) {
 						event.setAmount((float) (damage * CurseModConfig.NORMAL.get()));
 					} else if (world.getDifficulty() == Difficulty.HARD) {
@@ -122,7 +121,7 @@ public class CurseEventsProcedure {
 		if (event != null && event.getEntity() != null && event.getSource().getEntity() != null) {
 			Entity target = event.getEntity();
 			Entity source = event.getSource().getEntity();
-			LevelAccessor world = target.getLevel();
+			LevelAccessor world = target.level();
 			double x = target.getX();
 			double y = target.getY();
 			double z = target.getZ();
@@ -221,14 +220,14 @@ public class CurseEventsProcedure {
 	public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
 		if (event.phase == TickEvent.Phase.END) {
 			Player player = event.player;
-			LevelAccessor world = event.player.level;
+			LevelAccessor world = event.player.level();
 			if (CurseHelpersProcedure.isCursed(player)) {
 				if (!world.isClientSide() && !player.isCreative() && !player.isSpectator()) {
 					if (player.getRemainingFireTicks() == 1 && (CurseModConfig.FIRE.get() == true)) {
 						player.setSecondsOnFire(120);
 					}
 					if (CurseModConfig.ANGRY.get() == true) {
-						for (Mob angry : player.level.getEntitiesOfClass(Mob.class, player.getBoundingBox().inflate(28.0D))) {
+						for (Mob angry : player.level().getEntitiesOfClass(Mob.class, player.getBoundingBox().inflate(28.0D))) {
 							if (angry instanceof IronGolem golem && golem.isPlayerCreated())
 								continue;
 							if (angry.getType().is(TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation("curse:no_angry"))))
@@ -265,11 +264,11 @@ public class CurseEventsProcedure {
 	@SubscribeEvent
 	public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
 		ServerPlayer player = (ServerPlayer) event.getEntity();
-		LevelAccessor world = player.level;
+		LevelAccessor world = player.level();
 		double x = player.getX();
 		double y = player.getY();
 		double z = player.getZ();
-		if (!(player.level instanceof ServerLevel ? player.getAdvancements().getOrStartProgress(player.server.getAdvancements().getAdvancement(new ResourceLocation("minecraft:story/root"))).isDone() : false)) {
+		if (!(player.level() instanceof ServerLevel ? player.getAdvancements().getOrStartProgress(player.server.getAdvancements().getAdvancement(new ResourceLocation("minecraft:story/root"))).isDone() : false)) {
 			if (!CurseHelpersProcedure.isCursed(player)) {
 				BlockPos pos = BlockPos.containing(x, y, z);
 				NetworkHooks.openScreen((ServerPlayer) player, new MenuProvider() {
@@ -296,77 +295,15 @@ public class CurseEventsProcedure {
 				double x = event.getPos().getX();
 				double y = event.getPos().getY();
 				double z = event.getPos().getZ();
-				BlockState block = event.getState();
-				InteractionHand handy = player.swingingArm;
-				ItemStack tool = player.getItemInHand(handy);
+				BlockPos pos = BlockPos.containing(x, y, z);
+				BlockState state = event.getState();
+				ItemStack tool = player.getMainHandItem();
 				int fort = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, tool);
 				if (!(EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, tool) != 0)) {
-					if (world instanceof Level lvl && (Math.random() >= 0.65 - (0.05 * fort))) {
-						if (block.getBlock() == Blocks.COAL_ORE || block.getBlock() == Blocks.DEEPSLATE_COAL_ORE) {
-							for (int index0 = 0; index0 < (int) (Mth.nextInt(RandomSource.create(), 1, 2)); index0++) {
-								ItemEntity item = new ItemEntity(lvl, x, y, z, new ItemStack(Items.COAL));
-								item.setPickUpDelay(10);
-								lvl.addFreshEntity(item);
-							}
-						} else if (block.getBlock() == Blocks.DIAMOND_ORE || block.getBlock() == Blocks.DEEPSLATE_DIAMOND_ORE) {
-							for (int index0 = 0; index0 < (int) (Mth.nextInt(RandomSource.create(), 0, (1 + fort))); index0++) {
-								ItemEntity item = new ItemEntity(lvl, x, y, z, new ItemStack(Items.DIAMOND));
-								item.setPickUpDelay(10);
-								lvl.addFreshEntity(item);
-							}
-						} else if (block.getBlock() == Blocks.LAPIS_ORE || block.getBlock() == Blocks.DEEPSLATE_LAPIS_ORE) {
-							for (int index0 = 0; index0 < (int) (Mth.nextInt(RandomSource.create(), 1, 2)); index0++) {
-								ItemEntity item = new ItemEntity(lvl, x, y, z, new ItemStack(Items.LAPIS_LAZULI));
-								item.setPickUpDelay(10);
-								lvl.addFreshEntity(item);
-							}
-						} else if (block.getBlock() == Blocks.REDSTONE_ORE || block.getBlock() == Blocks.DEEPSLATE_REDSTONE_ORE) {
-							for (int index0 = 0; index0 < (int) (Mth.nextInt(RandomSource.create(), 1, 2)); index0++) {
-								ItemEntity item = new ItemEntity(lvl, x, y, z, new ItemStack(Items.REDSTONE));
-								item.setPickUpDelay(10);
-								lvl.addFreshEntity(item);
-							}
-						} else if (block.getBlock() == Blocks.IRON_ORE || block.getBlock() == Blocks.DEEPSLATE_IRON_ORE) {
-							if (tool.isEnchanted()) {
-								for (int index0 = 0; index0 < (int) (Mth.nextInt(RandomSource.create(), 1, 2)); index0++) {
-									ItemEntity item = new ItemEntity(lvl, x, y, z, new ItemStack(Items.IRON_INGOT));
-									item.setPickUpDelay(10);
-									lvl.addFreshEntity(item);
-								}
-							} else {
-								for (int index0 = 0; index0 < (int) (Mth.nextInt(RandomSource.create(), 1, 2)); index0++) {
-									ItemEntity item = new ItemEntity(lvl, x, y, z, new ItemStack(Items.RAW_IRON));
-									item.setPickUpDelay(10);
-									lvl.addFreshEntity(item);
-								}
-							}
-						} else if (block.getBlock() == Blocks.GOLD_ORE || block.getBlock() == Blocks.DEEPSLATE_GOLD_ORE) {
-							if (tool.isEnchanted()) {
-								for (int index0 = 0; index0 < (int) (Mth.nextInt(RandomSource.create(), 1, 2)); index0++) {
-									ItemEntity item = new ItemEntity(lvl, x, y, z, new ItemStack(Items.GOLD_INGOT));
-									item.setPickUpDelay(10);
-									lvl.addFreshEntity(item);
-								}
-							} else {
-								for (int index0 = 0; index0 < (int) (Mth.nextInt(RandomSource.create(), 1, 2)); index0++) {
-									ItemEntity item = new ItemEntity(lvl, x, y, z, new ItemStack(Items.RAW_GOLD));
-									item.setPickUpDelay(10);
-									lvl.addFreshEntity(item);
-								}
-							}
-						} else if (block.getBlock() == Blocks.COPPER_ORE || block.getBlock() == Blocks.DEEPSLATE_COPPER_ORE) {
-							if (tool.isEnchanted()) {
-								for (int index0 = 0; index0 < (int) (Mth.nextInt(RandomSource.create(), 1, 2)); index0++) {
-									ItemEntity item = new ItemEntity(lvl, x, y, z, new ItemStack(Items.COPPER_INGOT));
-									item.setPickUpDelay(10);
-									lvl.addFreshEntity(item);
-								}
-							} else {
-								for (int index0 = 0; index0 < (int) (Mth.nextInt(RandomSource.create(), 1, 2)); index0++) {
-									ItemEntity item = new ItemEntity(lvl, x, y, z, new ItemStack(Items.RAW_COPPER));
-									item.setPickUpDelay(10);
-									lvl.addFreshEntity(item);
-								}
+					if (world instanceof Level lvl && state.is(BlockTags.create(new ResourceLocation("curse:bonus")))) {
+						for (int dex = 0; dex < (int) (Mth.nextInt(RandomSource.create(), 0, 2)); dex++) {
+							if (Math.random() >= 0.65 - (0.05 * fort)) {
+								state.getBlock().dropResources(state, lvl, pos, null, player, tool);
 							}
 						}
 					}
@@ -374,4 +311,4 @@ public class CurseEventsProcedure {
 			}
 		}
 	}
-}
+}

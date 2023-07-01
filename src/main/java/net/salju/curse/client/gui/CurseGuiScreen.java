@@ -12,6 +12,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.GuiGraphics;
 
 import java.util.HashMap;
 
@@ -40,20 +41,15 @@ public class CurseGuiScreen extends AbstractContainerScreen<CurseGuiMenu> {
 	private static final ResourceLocation texture = new ResourceLocation("curse:textures/screens/curse_gui.png");
 
 	@Override
-	public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
+	public void render(GuiGraphics ms, int mouseX, int mouseY, float partialTicks) {
 		this.renderBackground(ms);
 		super.render(ms, mouseX, mouseY, partialTicks);
 		this.renderTooltip(ms, mouseX, mouseY);
 	}
 
 	@Override
-	protected void renderBg(PoseStack ms, float partialTicks, int gx, int gy) {
-		RenderSystem.setShaderColor(1, 1, 1, 1);
-		RenderSystem.enableBlend();
-		RenderSystem.defaultBlendFunc();
-		RenderSystem.setShaderTexture(0, texture);
-		this.blit(ms, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, this.imageWidth, this.imageHeight);
-		RenderSystem.disableBlend();
+	protected void renderBg(GuiGraphics ms, float partialTicks, int gx, int gy) {
+		ms.blit(texture, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, this.imageWidth, this.imageHeight);
 	}
 
 	@Override
@@ -71,26 +67,26 @@ public class CurseGuiScreen extends AbstractContainerScreen<CurseGuiMenu> {
 	}
 
 	@Override
-	protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
-		this.font.draw(poseStack, Component.translatable("gui.curse.curse_gui.label_title"), 30, 8, -12829636);
+	protected void renderLabels(GuiGraphics ms, int mouseX, int mouseY) {
+		ms.drawString(this.font, Component.translatable("gui.curse.curse_gui.label_title"), 30, 8, 4210752, false);
 		if ((CurseModConfig.EASY.get() < 1.0) && (CurseModConfig.NORMAL.get() < 1.0) && (CurseModConfig.HARD.get() < 1.0))
-			this.font.draw(poseStack, Component.translatable("gui.curse.curse_gui.label_enemy_damage"), 6, 20, -12829636);
+			ms.drawString(this.font, Component.translatable("gui.curse.curse_gui.label_enemy_damage"), 6, 20, 4210752, false);
 		if (CurseModConfig.DEATH.get() > 1.0)
-			this.font.draw(poseStack, Component.translatable("gui.curse.curse_gui.label_player_damage"), 6, 32, -12829636);
+			ms.drawString(this.font, Component.translatable("gui.curse.curse_gui.label_player_damage"), 6, 32, 4210752, false);
 		if (CurseModConfig.KNOCK.get() > 1.0)
-			this.font.draw(poseStack, Component.translatable("gui.curse.curse_gui.label_player_knockback"), 6, 44, -12829636);
+			ms.drawString(this.font, Component.translatable("gui.curse.curse_gui.label_player_knockback"), 6, 44, 4210752, false);
 		if (CurseModConfig.FIRE.get() == true)
-			this.font.draw(poseStack, Component.translatable("gui.curse.curse_gui.label_fire"), 6, 56, -12829636);
+			ms.drawString(this.font, Component.translatable("gui.curse.curse_gui.label_fire"), 6, 56, 4210752, false);
 		if (CurseModConfig.ANGRY.get() == true)
-			this.font.draw(poseStack, Component.translatable("gui.curse.curse_gui.label_neutrals"), 6, 68, -12829636);
+			ms.drawString(this.font, Component.translatable("gui.curse.curse_gui.label_neutrals"), 6, 68, 4210752, false);
 		if (CurseModConfig.SLEEP.get() == true)
-			this.font.draw(poseStack, Component.translatable("gui.curse.curse_gui.label_sleep"), 6, 80, -12829636);
+			ms.drawString(this.font, Component.translatable("gui.curse.curse_gui.label_sleep"), 6, 80, 4210752, false);
 		if (CurseModConfig.EXP.get() > 1.0)
-			this.font.draw(poseStack, Component.translatable("gui.curse.curse_gui.label_exp"), 6, 98, -12829636);
+			ms.drawString(this.font, Component.translatable("gui.curse.curse_gui.label_exp"), 6, 98, 4210752, false);
 		if (CurseModConfig.DROPS.get() == true)
-			this.font.draw(poseStack, Component.translatable("gui.curse.curse_gui.label_loot"), 6, 110, -12829636);
+			ms.drawString(this.font, Component.translatable("gui.curse.curse_gui.label_loot"), 6, 110, 4210752, false);
 		if (CurseModConfig.ORE.get() == true)
-			this.font.draw(poseStack, Component.translatable("gui.curse.curse_gui.label_ores"), 6, 122, -12829636);
+			ms.drawString(this.font, Component.translatable("gui.curse.curse_gui.label_ores"), 6, 122, 4210752, false);
 	}
 
 	@Override

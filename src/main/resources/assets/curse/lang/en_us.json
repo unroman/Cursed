@@ -1,17 +1,17 @@
 {
-  "gui.curse.curse_gui.label_neutrals": "-Neutrals are hostile towards you",
-  "gui.curse.curse_gui.label_player_damage": "-You take more damage",
-  "gui.curse.curse_gui.label_enemy_damage": "-You deal less damage to Enemies",
-  "gui.curse.curse_gui.label_title": "Are you Cursed, my child?",
-  "gui.curse.curse_gui.button_no": "NO",
-  "gui.curse.curse_gui.label_ores": "+You get more Loot from Ores",
   "gui.curse.curse_gui.label_exp": "+You get more EXP from Enemies",
   "gui.curse.curse_gui.button_yes": "YES",
   "gui.curse.curse_gui.label_sleep": "-You cannot sleep",
   "gui.curse.cure_message": "The curse has been cured",
   "gui.curse.sleep_message": "You cannot sleep as a Cursed player",
+  "gui.curse.curse_gui.label_neutrals": "-Neutrals are hostile towards you",
+  "gui.curse.curse_gui.label_player_damage": "-You take more damage",
   "gui.curse.curse_gui.label_player_knockback": "-You take more knockback",
   "gui.curse.curse_gui.label_loot": "+You get more Loot from Enemies",
+  "gui.curse.curse_gui.label_enemy_damage": "-You deal less damage to Enemies",
+  "gui.curse.curse_gui.button_no": "NO",
+  "gui.curse.curse_gui.label_title": "Are you Cursed, my child?",
+  "gui.curse.curse_gui.label_ores": "+You get more Loot from Ores",
   "gui.curse.curse_message": "You have been cursed",
   "gui.curse.curse_gui.label_fire": "-Fire lasts forever on you"
 }

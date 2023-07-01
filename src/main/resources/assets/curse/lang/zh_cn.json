@@ -1,17 +1,17 @@
 {
-  "gui.curse.curse_gui.label_neutrals": "-中立者对你有敌意",
-  "gui.curse.curse_gui.label_player_damage": "-你受到更多伤害",
-  "gui.curse.curse_gui.label_enemy_damage": "-你对敌人造成的伤害减少",
-  "gui.curse.curse_gui.label_title": "你被诅咒了吗，我的孩子？",
-  "gui.curse.curse_gui.button_no": "不",
-  "gui.curse.curse_gui.label_ores": "+你从矿石中获得更多战利品",
   "gui.curse.curse_gui.label_exp": "+你从敌人那里得到更多经验值",
   "gui.curse.curse_gui.button_yes": "是的",
   "gui.curse.curse_gui.label_sleep": "-你不能睡觉",
   "gui.curse.cure_message": "诅咒已被治愈",
   "gui.curse.sleep_message": "作为一个被诅咒的玩家，你无法入睡",
+  "gui.curse.curse_gui.label_neutrals": "-中立者对你有敌意",
+  "gui.curse.curse_gui.label_player_damage": "-你受到更多伤害",
   "gui.curse.curse_gui.label_player_knockback": "-你承受更多的击退",
   "gui.curse.curse_gui.label_loot": "+你从敌人那里得到更多战利品",
+  "gui.curse.curse_gui.label_enemy_damage": "-你对敌人造成的伤害减少",
+  "gui.curse.curse_gui.button_no": "不",
+  "gui.curse.curse_gui.label_title": "你被诅咒了吗，我的孩子？",
+  "gui.curse.curse_gui.label_ores": "+你从矿石中获得更多战利品",
   "gui.curse.curse_message": "你被诅咒了",
   "gui.curse.curse_gui.label_fire": "-火在你身上永存"
 }

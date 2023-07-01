@@ -57,14 +57,14 @@ public class CurseGuiButtonMessage {
 	}
 
 	public static void handleButtonAction(Player player, int buttonID, int x, int y, int z) {
-		Level world = player.level;
+		Level world = player.level();
 		HashMap guistate = CurseGuiMenu.guistate;
 		// security measure to prevent arbitrary chunk generation
 		if (!world.hasChunkAt(new BlockPos(x, y, z)))
 			return;
 		if (buttonID == 0) {
 			CurseHelpersProcedure.setCursed(player, true);
-			if (!player.level.isClientSide()) {
+			if (!player.level().isClientSide()) {
 				player.displayClientMessage(Component.translatable("gui.curse.curse_message"), (true));
 			}
 			player.closeContainer();

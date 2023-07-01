@@ -22,12 +22,12 @@ public class CurseCommand {
 			if (target instanceof Player player) {
 				if (CurseHelpersProcedure.isCursed(player)) {
 					CurseHelpersProcedure.setCursed(player, false);
-					if (!player.level.isClientSide()) {
+					if (!player.level().isClientSide()) {
 						player.displayClientMessage(Component.translatable("gui.curse.cure_message"), (true));
 					}
 				} else {
 					CurseHelpersProcedure.setCursed(player, true);
-					if (!player.level.isClientSide()) {
+					if (!player.level().isClientSide()) {
 						player.displayClientMessage(Component.translatable("gui.curse.curse_message"), (true));
 					}
 				}
