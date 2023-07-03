@@ -69,7 +69,7 @@ public class CurseGuiScreen extends AbstractContainerScreen<CurseGuiMenu> {
 	@Override
 	protected void renderLabels(GuiGraphics ms, int mouseX, int mouseY) {
 		ms.drawString(this.font, Component.translatable("gui.curse.curse_gui.label_title"), 30, 8, 4210752, false);
-		if ((CurseModConfig.EASY.get() < 1.0) && (CurseModConfig.NORMAL.get() < 1.0) && (CurseModConfig.HARD.get() < 1.0))
+		if ((CurseModConfig.WEAK.get() < 1.0))
 			ms.drawString(this.font, Component.translatable("gui.curse.curse_gui.label_enemy_damage"), 6, 20, 4210752, false);
 		if (CurseModConfig.DEATH.get() > 1.0)
 			ms.drawString(this.font, Component.translatable("gui.curse.curse_gui.label_player_damage"), 6, 32, 4210752, false);
