@@ -90,108 +90,112 @@ public class CurseEventsProcedure {
 
 	@SubscribeEvent
 	public static void onLivingDropXp(LivingExperienceDropEvent event) {
-		Player player = event.getAttackingPlayer();
-		Entity target = event.getEntity();
-		int xp = event.getDroppedExperience();
-		if (CurseHelpersProcedure.isCursed(player)) {
-			if (target instanceof Enemy) {
-				event.setDroppedExperience((int) (xp * CurseModConfig.EXP.get()));
+		if (event.getAttackingPlayer() != null && event.getEntity() != null) {
+			Player player = event.getAttackingPlayer();
+			Entity target = event.getEntity();
+			int xp = event.getDroppedExperience();
+			if (CurseHelpersProcedure.isCursed(player)) {
+				if (target instanceof Enemy) {
+					event.setDroppedExperience((int) (xp * CurseModConfig.EXP.get()));
+				}
 			}
 		}
 	}
 
 	@SubscribeEvent
 	public static void onLivingDrops(LivingDropsEvent event) {
-		Entity target = event.getEntity();
-		Entity source = event.getSource().getEntity();
-		LevelAccessor world = target.level();
-		double x = target.getX();
-		double y = target.getY();
-		double z = target.getZ();
-		int loot = event.getLootingLevel();
-		if (source instanceof Player player && CurseHelpersProcedure.isCursed(player) && (CurseModConfig.DROPS.get() == true)) {
-			if (world instanceof Level lvl && (Math.random() >= 0.85)) {
-				if (target instanceof ZombifiedPiglin || target instanceof AbstractPiglin) {
-					for (int index0 = 0; index0 < (int) (Mth.nextInt(RandomSource.create(), (0 + loot), (2 + loot))); index0++) {
-						ItemEntity item = new ItemEntity(lvl, x, y, z, new ItemStack(Items.GOLD_INGOT));
+		if (event.getEntity() != null && event.getSource().getEntity() != null) {
+			Entity target = event.getEntity();
+			Entity source = event.getSource().getEntity();
+			LevelAccessor world = target.level();
+			double x = target.getX();
+			double y = target.getY();
+			double z = target.getZ();
+			int loot = event.getLootingLevel();
+			if (source instanceof Player player && CurseHelpersProcedure.isCursed(player) && (CurseModConfig.DROPS.get() == true)) {
+				if (world instanceof Level lvl && (Math.random() >= 0.85)) {
+					if (target instanceof ZombifiedPiglin || target instanceof AbstractPiglin) {
+						for (int index0 = 0; index0 < (int) (Mth.nextInt(RandomSource.create(), (0 + loot), (2 + loot))); index0++) {
+							ItemEntity item = new ItemEntity(lvl, x, y, z, new ItemStack(Items.GOLD_INGOT));
+							item.setPickUpDelay(10);
+							lvl.addFreshEntity(item);
+						}
+					} else if (target instanceof Drowned || target instanceof Guardian) {
+						for (int index0 = 0; index0 < (int) (Mth.nextInt(RandomSource.create(), (0 + loot), (2 + loot))); index0++) {
+							ItemEntity item = new ItemEntity(lvl, x, y, z, new ItemStack(Items.LAPIS_LAZULI));
+							item.setPickUpDelay(10);
+							lvl.addFreshEntity(item);
+						}
+					} else if (target instanceof Husk) {
+						for (int index0 = 0; index0 < (int) (Mth.nextInt(RandomSource.create(), (0 + loot), (2 + loot))); index0++) {
+							ItemEntity item = new ItemEntity(lvl, x, y, z, new ItemStack(Items.SAND));
+							item.setPickUpDelay(10);
+							lvl.addFreshEntity(item);
+						}
+					} else if (target instanceof Zombie) {
+						for (int index0 = 0; index0 < (int) (Mth.nextInt(RandomSource.create(), (0 + loot), (2 + loot))); index0++) {
+							ItemEntity item = new ItemEntity(lvl, x, y, z, new ItemStack(Items.SLIME_BALL));
+							item.setPickUpDelay(10);
+							lvl.addFreshEntity(item);
+						}
+					} else if (target instanceof Witch) {
+						for (int index0 = 0; index0 < (int) (Mth.nextInt(RandomSource.create(), (0 + loot), (2 + loot))); index0++) {
+							ItemEntity item = new ItemEntity(lvl, x, y, z, new ItemStack(Items.PHANTOM_MEMBRANE));
+							item.setPickUpDelay(10);
+							lvl.addFreshEntity(item);
+						}
+					} else if (target instanceof SpellcasterIllager) {
+						for (int index0 = 0; index0 < (int) (Mth.nextInt(RandomSource.create(), 0, 1)); index0++) {
+							ItemEntity item = new ItemEntity(lvl, x, y, z, new ItemStack(Items.DIAMOND));
+							item.setPickUpDelay(10);
+							lvl.addFreshEntity(item);
+						}
+					} else if (target instanceof AbstractIllager) {
+						for (int index0 = 0; index0 < (int) (Mth.nextInt(RandomSource.create(), (0 + loot), (2 + loot))); index0++) {
+							ItemEntity item = new ItemEntity(lvl, x, y, z, new ItemStack(Items.EMERALD));
+							item.setPickUpDelay(10);
+							lvl.addFreshEntity(item);
+						}
+					} else if (target instanceof WitherSkeleton && (Math.random() >= (0.9 - (0.05 * loot)))) {
+						ItemEntity item = new ItemEntity(lvl, x, y, z, new ItemStack(Items.NETHERITE_SCRAP));
 						item.setPickUpDelay(10);
 						lvl.addFreshEntity(item);
-					}
-				} else if (target instanceof Drowned || target instanceof Guardian) {
-					for (int index0 = 0; index0 < (int) (Mth.nextInt(RandomSource.create(), (0 + loot), (2 + loot))); index0++) {
-						ItemEntity item = new ItemEntity(lvl, x, y, z, new ItemStack(Items.LAPIS_LAZULI));
-						item.setPickUpDelay(10);
-						lvl.addFreshEntity(item);
-					}
-				} else if (target instanceof Husk) {
-					for (int index0 = 0; index0 < (int) (Mth.nextInt(RandomSource.create(), (0 + loot), (2 + loot))); index0++) {
-						ItemEntity item = new ItemEntity(lvl, x, y, z, new ItemStack(Items.SAND));
-						item.setPickUpDelay(10);
-						lvl.addFreshEntity(item);
-					}
-				} else if (target instanceof Zombie) {
-					for (int index0 = 0; index0 < (int) (Mth.nextInt(RandomSource.create(), (0 + loot), (2 + loot))); index0++) {
-						ItemEntity item = new ItemEntity(lvl, x, y, z, new ItemStack(Items.SLIME_BALL));
-						item.setPickUpDelay(10);
-						lvl.addFreshEntity(item);
-					}
-				} else if (target instanceof Witch) {
-					for (int index0 = 0; index0 < (int) (Mth.nextInt(RandomSource.create(), (0 + loot), (2 + loot))); index0++) {
-						ItemEntity item = new ItemEntity(lvl, x, y, z, new ItemStack(Items.PHANTOM_MEMBRANE));
-						item.setPickUpDelay(10);
-						lvl.addFreshEntity(item);
-					}
-				} else if (target instanceof SpellcasterIllager) {
-					for (int index0 = 0; index0 < (int) (Mth.nextInt(RandomSource.create(), 0, 1)); index0++) {
-						ItemEntity item = new ItemEntity(lvl, x, y, z, new ItemStack(Items.DIAMOND));
-						item.setPickUpDelay(10);
-						lvl.addFreshEntity(item);
-					}
-				} else if (target instanceof AbstractIllager) {
-					for (int index0 = 0; index0 < (int) (Mth.nextInt(RandomSource.create(), (0 + loot), (2 + loot))); index0++) {
-						ItemEntity item = new ItemEntity(lvl, x, y, z, new ItemStack(Items.EMERALD));
-						item.setPickUpDelay(10);
-						lvl.addFreshEntity(item);
-					}
-				} else if (target instanceof WitherSkeleton && (Math.random() >= (0.9 - (0.05 * loot)))) {
-					ItemEntity item = new ItemEntity(lvl, x, y, z, new ItemStack(Items.NETHERITE_SCRAP));
-					item.setPickUpDelay(10);
-					lvl.addFreshEntity(item);
-				} else if (target instanceof EnderMan) {
-					for (int index0 = 0; index0 < (int) (Mth.nextInt(RandomSource.create(), 0, (1 + loot))); index0++) {
-						ItemEntity item = new ItemEntity(lvl, x, y, z, new ItemStack(Items.ENDER_EYE));
-						item.setPickUpDelay(10);
-						lvl.addFreshEntity(item);
-					}
-				} else if (target instanceof Skeleton) {
-					for (int index0 = 0; index0 < (int) (Mth.nextInt(RandomSource.create(), (1 + loot), (5 + loot))); index0++) {
-						ItemEntity item = new ItemEntity(lvl, x, y, z, new ItemStack(Items.ARROW));
-						item.setPickUpDelay(10);
-						lvl.addFreshEntity(item);
-					}
-				} else if (target instanceof Creeper) {
-					for (int index0 = 0; index0 < (int) (Mth.nextInt(RandomSource.create(), (1 + loot), (5 + loot))); index0++) {
-						ItemEntity item = new ItemEntity(lvl, x, y, z, new ItemStack(Items.GUNPOWDER));
-						item.setPickUpDelay(10);
-						lvl.addFreshEntity(item);
-					}
-				} else if (target instanceof MagmaCube || target instanceof Vex) {
-					for (int index0 = 0; index0 < (int) (Mth.nextInt(RandomSource.create(), (0 + loot), (2 + loot))); index0++) {
-						ItemEntity item = new ItemEntity(lvl, x, y, z, new ItemStack(Items.GLOWSTONE_DUST));
-						item.setPickUpDelay(10);
-						lvl.addFreshEntity(item);
-					}
-				} else if (target instanceof Blaze) {
-					for (int index0 = 0; index0 < (int) (Mth.nextInt(RandomSource.create(), 0, 2)); index0++) {
-						ItemEntity item = new ItemEntity(lvl, x, y, z, new ItemStack(Items.BLAZE_ROD));
-						item.setPickUpDelay(10);
-						lvl.addFreshEntity(item);
-					}
-				} else if (target instanceof Spider) {
-					for (int index0 = 0; index0 < (int) (Mth.nextInt(RandomSource.create(), 0, 2)); index0++) {
-						ItemEntity item = new ItemEntity(lvl, x, y, z, new ItemStack(Items.FERMENTED_SPIDER_EYE));
-						item.setPickUpDelay(10);
-						lvl.addFreshEntity(item);
+					} else if (target instanceof EnderMan) {
+						for (int index0 = 0; index0 < (int) (Mth.nextInt(RandomSource.create(), 0, (1 + loot))); index0++) {
+							ItemEntity item = new ItemEntity(lvl, x, y, z, new ItemStack(Items.ENDER_EYE));
+							item.setPickUpDelay(10);
+							lvl.addFreshEntity(item);
+						}
+					} else if (target instanceof Skeleton) {
+						for (int index0 = 0; index0 < (int) (Mth.nextInt(RandomSource.create(), (1 + loot), (5 + loot))); index0++) {
+							ItemEntity item = new ItemEntity(lvl, x, y, z, new ItemStack(Items.ARROW));
+							item.setPickUpDelay(10);
+							lvl.addFreshEntity(item);
+						}
+					} else if (target instanceof Creeper) {
+						for (int index0 = 0; index0 < (int) (Mth.nextInt(RandomSource.create(), (1 + loot), (5 + loot))); index0++) {
+							ItemEntity item = new ItemEntity(lvl, x, y, z, new ItemStack(Items.GUNPOWDER));
+							item.setPickUpDelay(10);
+							lvl.addFreshEntity(item);
+						}
+					} else if (target instanceof MagmaCube || target instanceof Vex) {
+						for (int index0 = 0; index0 < (int) (Mth.nextInt(RandomSource.create(), (0 + loot), (2 + loot))); index0++) {
+							ItemEntity item = new ItemEntity(lvl, x, y, z, new ItemStack(Items.GLOWSTONE_DUST));
+							item.setPickUpDelay(10);
+							lvl.addFreshEntity(item);
+						}
+					} else if (target instanceof Blaze) {
+						for (int index0 = 0; index0 < (int) (Mth.nextInt(RandomSource.create(), 0, 2)); index0++) {
+							ItemEntity item = new ItemEntity(lvl, x, y, z, new ItemStack(Items.BLAZE_ROD));
+							item.setPickUpDelay(10);
+							lvl.addFreshEntity(item);
+						}
+					} else if (target instanceof Spider) {
+						for (int index0 = 0; index0 < (int) (Mth.nextInt(RandomSource.create(), 0, 2)); index0++) {
+							ItemEntity item = new ItemEntity(lvl, x, y, z, new ItemStack(Items.FERMENTED_SPIDER_EYE));
+							item.setPickUpDelay(10);
+							lvl.addFreshEntity(item);
+						}
 					}
 				}
 			}
@@ -234,10 +238,12 @@ public class CurseEventsProcedure {
 
 	@SubscribeEvent
 	public static void onLooter(LootingLevelEvent event) {
-		Entity source = event.getDamageSource().getEntity();
-		int loot = event.getLootingLevel();
-		if (source instanceof Player player && CurseHelpersProcedure.isCursed(player) && (CurseModConfig.LOOT.get() == true)) {
-			event.setLootingLevel(loot + 1);
+		if (event.getDamageSource().getEntity() != null) {
+			Entity source = event.getDamageSource().getEntity();
+			int loot = event.getLootingLevel();
+			if (source instanceof Player player && CurseHelpersProcedure.isCursed(player) && (CurseModConfig.LOOT.get() == true)) {
+				event.setLootingLevel(loot + 1);
+			}
 		}
 	}
 
@@ -289,4 +295,4 @@ public class CurseEventsProcedure {
 			}
 		}
 	}
-}
+}
