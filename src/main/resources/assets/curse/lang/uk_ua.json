@@ -1,0 +1,17 @@
+{
+  "gui.curse.curse_gui.label_exp": "+Ви отримуєте більше досвіду з ворогів",
+  "gui.curse.curse_gui.button_yes": "ТАК",
+  "gui.curse.curse_gui.label_sleep": "-Ви не можете спати",
+  "gui.curse.cure_message": "Прокляття знято",
+  "gui.curse.sleep_message": "Ви не можете спати, доти прокляті",
+  "gui.curse.curse_gui.label_neutrals": "-Нейтральні ворожі до вас",
+  "gui.curse.curse_gui.label_player_damage": "-Ви отримуєте більше шкоди",
+  "gui.curse.curse_gui.label_player_knockback": "-Ви отримуєте більше відкидання",
+  "gui.curse.curse_gui.label_loot": "+Ви отримуюте більше здобичі з ворогів",
+  "gui.curse.curse_gui.label_enemy_damage": "-Ви завдаєте менше шкоди ворогам",
+  "gui.curse.curse_gui.button_no": "НІ",
+  "gui.curse.curse_gui.label_title": "Тебе прокляли, моє дитя?",
+  "gui.curse.curse_gui.label_ores": "+Ви отримуєте більше здобичі з руди",
+  "gui.curse.curse_message": "Вас прокляли",
+  "gui.curse.curse_gui.label_fire": "-Вогонь ніколи не вщухає на вас"
+}
